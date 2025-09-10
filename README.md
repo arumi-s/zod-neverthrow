@@ -21,6 +21,58 @@ This package requires the following peer dependencies:
 
 ## Usage
 
+### zod/v4 (functional)
+
+```typescript
+import { z } from 'zod/v4';
+import { neverthrowParse } from 'zod-neverthrow/v4';
+
+const UserSchema = z.object({
+	name: z.string(),
+	age: z.number(),
+	enabled: z.boolean(),
+});
+
+// Result<{ name: string; age: number; enabled: boolean; }, z.$ZodError<{ name: string; age: number; enabled: boolean; }>>
+const result = neverthrowParse(UserSchema, {
+	name: 'John Doe',
+	age: 30,
+	enabled: true,
+});
+
+result.match(
+	(user) => console.log('User processed successfully:', user),
+	(error) => console.error('Invalid user data:', error.errors),
+);
+```
+
+### zod/v3 (functional)
+
+```typescript
+import { z } from 'zod/v3';
+import { neverthrowParse } from 'zod-neverthrow/v3';
+
+const UserSchema = z.object({
+	name: z.string(),
+	age: z.number(),
+	enabled: z.boolean(),
+});
+
+// Result<{ name: string; age: number; enabled: boolean; }, z.ZodError<any>>
+const result = neverthrowParse(UserSchema, {
+	name: 'John Doe',
+	age: 30,
+	enabled: true,
+});
+
+result.match(
+	(user) => console.log('User processed successfully:', user),
+	(error) => console.error('Invalid user data:', error.errors),
+);
+```
+
+### zod/v3 (legacy monkey patching)
+
 ```typescript
 import { z } from 'zod';
 import 'zod-neverthrow';

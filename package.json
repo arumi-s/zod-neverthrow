@@ -1,6 +1,6 @@
 {
 	"name": "zod-neverthrow",
-	"version": "1.0.0",
+	"version": "2.0.0",
 	"description": "",
 	"type": "module",
 	"sideEffects": false,
@@ -12,7 +12,15 @@
 		"type": "git",
 		"url": "git+https://github.com/arumi-s/zod-neverthrow.git"
 	},
-	"keywords": [],
+	"keywords": [
+		"typescript",
+		"schema",
+		"validation",
+		"type",
+		"inference",
+		"zod",
+		"neverthrow"
+	],
 	"publishConfig": {
 		"access": "public"
 	},
@@ -20,12 +28,25 @@
 		"dist"
 	],
 	"main": "./dist/index.cjs",
+	"types": "./dist/index.d.ts",
 	"module": "./dist/index.js",
 	"exports": {
-		"require": "./dist/index.cjs",
-		"import": "./dist/index.js"
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		},
+		"./v3": {
+			"types": "./dist/v3/index.d.ts",
+			"import": "./dist/v3/index.js",
+			"require": "./dist/v3/index.cjs"
+		},
+		"./v4": {
+			"types": "./dist/v4/index.d.ts",
+			"import": "./dist/v4/index.js",
+			"require": "./dist/v4/index.cjs"
+		}
 	},
-	"types": "./dist/index.d.ts",
 	"scripts": {
 		"build": "tsup --config tsup.config.ts",
 		"test": "vitest run",
@@ -37,18 +58,18 @@
 		"@semantic-release/changelog": "^6.0.3",
 		"@semantic-release/commit-analyzer": "^13.0.1",
 		"@semantic-release/git": "^10.0.1",
-		"@semantic-release/github": "^11.0.1",
-		"@semantic-release/release-notes-generator": "^14.0.3",
-		"@vitest/coverage-v8": "^3.0.9",
-		"prettier": "^3.5.3",
-		"semantic-release": "^24.2.3",
-		"tsup": "^8.4.0",
-		"typescript": "^5.8.2",
-		"vite": "^6.2.2",
-		"vitest": "^3.0.9"
+		"@semantic-release/github": "^11.0.5",
+		"@semantic-release/release-notes-generator": "^14.1.0",
+		"@vitest/coverage-v8": "^3.2.4",
+		"prettier": "^3.6.2",
+		"semantic-release": "^24.2.7",
+		"tsup": "^8.5.0",
+		"typescript": "^5.9.2",
+		"vite": "^7.1.5",
+		"vitest": "^3.2.4"
 	},
 	"peerDependencies": {
 		"neverthrow": "^8",
-		"zod": "^3"
+		"zod": "^3.25.0 || ^4.0.0"
 	}
 }

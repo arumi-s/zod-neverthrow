@@ -1,7 +1,7 @@
-import { ParseParams, z } from 'zod';
-import { Result, ok, err } from 'neverthrow';
+import { type ParseParams, z } from 'zod/v3';
+import { type Result, ok, err } from 'neverthrow';
 
-declare module 'zod' {
+declare module 'zod/v3' {
 	interface ZodType<Output, Def extends z.ZodTypeDef, Input = Output> {
 		neverthrowParse(data: unknown): Result<Output, z.ZodError>;
 	}

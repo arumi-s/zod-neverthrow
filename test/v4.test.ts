@@ -1,29 +1,20 @@
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
-import { z } from 'zod/v3';
-import '../src';
+import { z } from 'zod/v4';
+import { neverthrowParse } from '../src/v4';
 import { ok } from 'neverthrow';
 
 describe('neverthrowParse', () => {
 	it('should exists', () => {
 		const schema = z.string();
 
-		expect(schema.neverthrowParse).toBeDefined();
-		expect(typeof schema.neverthrowParse).toBe('function');
-	});
-
-	it('should have a correct descriptor', () => {
-		const descriptor = Object.getOwnPropertyDescriptor(z.ZodType.prototype, 'neverthrowParse');
-
-		expect(descriptor).toBeDefined();
-		expect(descriptor!.writable).toBe(true);
-		expect(descriptor!.enumerable).toBe(false);
-		expect(descriptor!.configurable).toBe(true);
+		expect(neverthrowParse).toBeDefined();
+		expect(typeof neverthrowParse).toBe('function');
 	});
 
 	it('should return an Ok result', () => {
 		const schema = z.string();
 
-		const result = schema.neverthrowParse('test');
+		const result = neverthrowParse(schema, 'test');
 
 		expect(result.isOk()).toBe(true);
 		expect(result._unsafeUnwrap()).toBe('test');
@@ -32,10 +23,10 @@ describe('neverthrowParse', () => {
 	it('should return an Err result', () => {
 		const schema = z.string();
 
-		const result = schema.neverthrowParse(123);
+		const result = neverthrowParse(schema, 123);
 
 		expect(result.isErr()).toBe(true);
-		expect(result._unsafeUnwrapErr().issues[0].message).toBe('Expected string, received number');
+		expect(result._unsafeUnwrapErr().issues[0].message).toBe('Invalid input: expected string, received number');
 	});
 
 	it('should infer the output type', () => {
@@ -45,7 +36,7 @@ describe('neverthrowParse', () => {
 			enabled: z.boolean(),
 		});
 
-		const result = schema.neverthrowParse({
+		const result = neverthrowParse(schema, {
 			name: 'John Doe',
 			age: 30,
 			enabled: true,
@@ -66,7 +57,7 @@ describe('neverthrowParse', () => {
 			enabled: z.boolean(),
 		});
 
-		const result1 = schema.neverthrowParse({
+		const result1 = neverthrowParse(schema, {
 			name: 'John Doe',
 			age: 30,
 			enabled: true,
