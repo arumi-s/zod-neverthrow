@@ -1,6 +1,6 @@
 {
 	"name": "zod-neverthrow",
-	"version": "1.2.1",
+	"version": "1.2.2",
 	"description": "A lightweight TypeScript utility that integrates Zod schema validation with the Result type from neverthrow for streamlined robust error handling.",
 	"type": "module",
 	"sideEffects": false,
@@ -59,15 +59,15 @@
 		"@semantic-release/changelog": "^6.0.3",
 		"@semantic-release/commit-analyzer": "^13.0.1",
 		"@semantic-release/git": "^10.0.1",
-		"@semantic-release/github": "^11.0.5",
+		"@semantic-release/github": "^12.0.0",
 		"@semantic-release/release-notes-generator": "^14.1.0",
-		"@vitest/coverage-v8": "^3.2.4",
+		"@vitest/coverage-v8": "^4.0.4",
 		"prettier": "^3.6.2",
-		"semantic-release": "^24.2.7",
+		"semantic-release": "^25.0.1",
 		"tsup": "^8.5.0",
-		"typescript": "^5.9.2",
-		"vite": "^7.1.5",
-		"vitest": "^3.2.4"
+		"typescript": "^5.9.3",
+		"vite": "^7.1.12",
+		"vitest": "^4.0.4"
 	},
 	"peerDependencies": {
 		"neverthrow": "^8",
