@@ -1,7 +1,7 @@
 {
 	"name": "zod-neverthrow",
-	"version": "1.2.0",
-	"description": "",
+	"version": "1.2.1",
+	"description": "A lightweight TypeScript utility that integrates Zod schema validation with the Result type from neverthrow for streamlined robust error handling.",
 	"type": "module",
 	"sideEffects": false,
 	"author": {
@@ -28,21 +28,22 @@
 		"dist"
 	],
 	"main": "./dist/index.cjs",
-	"types": "./dist/index.d.ts",
+	"types": "./dist/index.d.cts",
 	"module": "./dist/index.js",
 	"exports": {
+		"./package.json": "./package.json",
 		".": {
-			"types": "./dist/index.d.ts",
+			"types": "./dist/index.d.cts",
 			"import": "./dist/index.js",
 			"require": "./dist/index.cjs"
 		},
 		"./v3": {
-			"types": "./dist/v3/index.d.ts",
+			"types": "./dist/v3/index.d.cts",
 			"import": "./dist/v3/index.js",
 			"require": "./dist/v3/index.cjs"
 		},
 		"./v4": {
-			"types": "./dist/v4/index.d.ts",
+			"types": "./dist/v4/index.d.cts",
 			"import": "./dist/v4/index.js",
 			"require": "./dist/v4/index.cjs"
 		}
