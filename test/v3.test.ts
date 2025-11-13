@@ -1,7 +1,7 @@
 import { describe, expect, expectTypeOf, it, vi } from 'vitest';
 import { z } from 'zod/v3';
-import { neverthrowParse } from '../src/v3';
-import { ok } from 'neverthrow';
+import { createResultSchema, neverthrowParse } from '../src/v3';
+import { err, ok } from 'neverthrow';
 
 describe('neverthrowParse', () => {
 	it('should exists', () => {
@@ -84,5 +84,94 @@ describe('neverthrowParse', () => {
 		});
 
 		expect(thenFn).toHaveBeenCalledTimes(1);
+	});
+});
+
+describe('createResultSchema', () => {
+	it('should exists', () => {
+		expect(createResultSchema).toBeDefined();
+		expect(typeof createResultSchema).toBe('function');
+	});
+
+	it('should return a ZodSchema', () => {
+		const value = z.string();
+		const error = z.string();
+
+		const schema = createResultSchema(value, error);
+
+		expect(schema).toBeInstanceOf(z.ZodSchema);
+	});
+
+	it('should validate Result', () => {
+		const value = z.string();
+		const error = z.string();
+
+		const schema = createResultSchema(value, error);
+
+		const result = ok('');
+		expect(schema.safeParse(result)).toStrictEqual({
+			data: result,
+			success: true,
+		});
+		expect(schema.safeParse('').success).toBe(false);
+	});
+
+	it('should validate Result.value if isOk', () => {
+		const value = z.string();
+		const error = z.string();
+
+		const schema = createResultSchema(value, error);
+
+		expect(schema.safeParse(ok('')).success).toBe(true);
+		expect(schema.safeParse(ok(1)).success).toBe(false);
+	});
+
+	it('should validate Result.error if isErr', () => {
+		const value = z.string();
+		const error = z.string();
+
+		const schema = createResultSchema(value, error);
+
+		expect(schema.safeParse(err('')).success).toBe(true);
+		expect(schema.safeParse(err(1)).success).toBe(false);
+	});
+
+	it('should infer the Result.value type', () => {
+		const value = z.object({
+			name: z.string(),
+			age: z.number(),
+			enabled: z.boolean(),
+		});
+		const error = z.string();
+
+		const schema = createResultSchema(value, error);
+		const result = schema.parse(ok({ name: 'John Doe', age: 30, enabled: true }));
+
+		expectTypeOf(result._unsafeUnwrap()).toMatchObjectType<{
+			name: string;
+			age: number;
+			enabled: boolean;
+		}>();
+	});
+
+	it('should infer the Result.error type', () => {
+		const value = z.string();
+		const error = z.object({
+			code: z.number().int(),
+			message: z.string(),
+		});
+
+		const schema = createResultSchema(value, error);
+		const result = schema.parse(
+			err({
+				code: 400,
+				message: 'Bad Request',
+			}),
+		);
+
+		expectTypeOf(result._unsafeUnwrapErr()).toMatchObjectType<{
+			code: number;
+			message: string;
+		}>();
 	});
 });
